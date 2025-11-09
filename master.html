@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Cataract - Fee Rate Schedule</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="feestyles.css">
+</head>
+<body>
+
+    <nav class="navbar bg-body-tertiary fixed-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Advanced Cataract Fee Schedule</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Page Selection
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="index.html">Fee Calculator</a></li>
+              <li><a class="dropdown-item" href="master.html">Master Code List</a></li>
+              <li><a class="dropdown-item" href="login.html">Admin Login</a></li>
+              <li><a class="dropdown-item" href="config.html">Configuration</a></li>
+            </ul>
+          </li>
+        </ul>
+        <form class="d-flex mt-3" role="search">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<br>
+<br>
+<br>
+
+    <div>
+        <img class="img-responsive standard-logo retina-logo" height="150"
+        src="//cataractglaucomacare.com/wp-content/uploads/2020/03/ACGC-Logo-Final-2.png" alt="Clinton W. Sheets, MD">
+    </div>
+
+    <div class="table-outline mx-5 my-5">
+    <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th scope="col" style="background-color: yellow;">Exam Codes</th>
+            <th scope="col">Description</th>
+            <th scope="col">Charge</th>
+            <th scope="col">Self Pay</th>
+            <th scope="col">Medicare Rate</th>
+            <th scope="col">Medicare Only</th>
+            <th scope="col">Florida Blue</th>
+            <th scope="col">Aetna</th>
+            <th scope="col">Cigna</th>
+            <th scope="col">United Commercial</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">99205</th>
+            <td id="row1-1">New Patient Level 5</td>
+            <td id="row1-2">$446.90</td>
+            <td id="row1-3">$335.18</td>
+            <td id="row1-4">$214.80</td>
+            <td id="row1-5">$42.96</td>
+            <td id="row1-6">$177.75</td>
+            <td id="row1-7">$160.19</td>
+            <td id="row1-8">$178.88</td>
+            <td id="row1-9">$164.15</td>
+          </tr>
+          <tr>
+            <th scope="row">99204</th>
+            <td id="row2-1">New Patient Level 4</td>
+            <td id="row2-2">$337.66</td>
+            <td id="row2-3">$253.25</td>
+            <td id="row2-4">$162.56</td>
+            <td id="row2-5">$32.51</td>
+            <td id="row2-6">$141.21</td>
+            <td id="row2-7">$127.35</td>
+            <td id="row2-8">$141.42</td>
+            <td id="row2-9">$129.78</td>
+          </tr>
+          <tr>
+            <th scope="row">99203</th>
+            <td id="row3-1">New Patient Level 3</td>
+            <td id="row3-2">$226.40</td>
+            <td id="row3-3">$169.80</td>
+            <td id="row3-4">$109.53</td>
+            <td id="row3-5">$21.91</td>
+            <td id="row3-6">$92.78</td>
+            <td id="row3-7">$81.94</td>
+            <td id="row3-8">$92.08</td>
+            <td id="row3-9">$84.50</td>
+          </tr>
+          <tr>
+            <th scope="row">99202</th>
+            <td id="row4-1">New Patient Level 2</td>
+            <td id="row4-2">$169.52</td>
+            <td id="row4-3">$127.14</td>
+            <td id="row4-4">$70.01</td>
+            <td id="row4-5">$14.00</td>
+            <td id="row4-6">$65.06</td>
+            <td id="row4-7">INVALID</td>
+            <td id="row4-8">$64.88</td>
+            <td id="row4-9">$59.55</td>
+          </tr>
+          <tr>
+            <th scope="row">92004</th>
+            <td id="row5-1">New Patient Comprehensive Eye Exam</td>
+            <td id="row5-2">$294.70</td>
+            <td id="row5-3">$221.03</td>
+            <td id="row5-4">$142.27</td>
+            <td id="row5-5">$28.45</td>
+            <td id="row5-6">$127.78</td>
+            <td id="row5-7">$112.88</td>
+            <td id="row5-8">$126.46</td>
+            <td id="row5-9">$116.04</td>
+          </tr>
+          <tr>
+            <th scope="row">92002</th>
+            <td id="row6-1">New Patient Intermediate Eye Exam</td>
+            <td id="row6-2">$162.04</td>
+            <td id="row6-3">$121.53</td>
+            <td id="row6-4">$81.02</td>
+            <td id="row6-5">$16.20</td>
+            <td id="row6-6">$70.78</td>
+            <td id="row6-7">$62.13</td>
+            <td id="row6-8">$70.51</td>
+            <td id="row6-9">$64.70</td>
+          </tr>
+          <tr>
+            <th scope="row">99215</th>
+            <td id="row7-1">Established Patient Level 5</td>
+            <td id="row7-2">$362.84</td>
+            <td id="row7-3">$272.13</td>
+            <td id="row7-4">$173.95</td>
+            <td id="row7-5">$34.79</td>
+            <td id="row7-6">$124.54</td>
+            <td id="row7-7">INVALID</td>
+            <td id="row7-8">$124.84</td>
+            <td id="row7-9">$114.56</td>
+          </tr>
+          <tr>
+            <th scope="row">99214</th>
+            <td id="row8-1">Established Patient Level 4</td>
+            <td id="row8-2">$255.94</td>
+            <td id="row8-3">$191.96</td>
+            <td id="row8-4">$123.96</td>
+            <td id="row8-5">$24.79</td>
+            <td id="row8-6">$92.69</td>
+            <td id="row8-7">$82.12</td>
+            <td id="row8-8">$92.80</td>
+            <td id="row8-9">$85.16</td>
+          </tr>
+          <tr>
+            <th scope="row">99213</th>
+            <td id="row9-1">Established Patient Level 3</td>
+            <td id="row9-2">$181.80</td>
+            <td id="row9-3">$136.35</td>
+            <td id="row9-4">$87.55</td>
+            <td id="row9-5">$17.51</td>
+            <td id="row9-6">$63.25</td>
+            <td id="row9-7">$54.63</td>
+            <td id="row9-8">$63.94</td>
+            <td id="row9-9">$58.68</td>
+          </tr>
+          <tr>
+            <th scope="row">99212</th>
+            <td id="row10-1">Established Patient Level 2</td>
+            <td id="row10-2">$113.24</td>
+            <td id="row10-3">$84.93</td>
+            <td id="row10-4">$54.61</td>
+            <td id="row10-5">$10.92</td>
+            <td id="row10-6">$38.24</td>
+            <td id="row10-7">INVALID</td>
+            <td id="row10-8">$38.63</td>
+            <td id="row10-9">$35.45</td>
+          </tr>
+          <tr>
+            <th scope="row">92014</th>
+            <td id="row11-1">Established Patient Comprehensive Eye Exam</td>
+            <td id="row11-2">$248.82</td>
+            <td id="row11-3">$186.62</td>
+            <td id="row11-4">$120.03</td>
+            <td id="row11-5">$24.01</td>
+            <td id="row11-6">$106.95</td>
+            <td id="row11-7">$94.26</td>
+            <td id="row11-8">$106.06</td>
+            <td id="row11-9">$97.33</td>
+          </tr>
+          <tr>
+            <th scope="row">92012</th>
+            <td id="row12-1">Established Patient Intermediate Eye Exam</td>
+            <td id="row12-2">$175.54</td>
+            <td id="row12-3">$131.66</td>
+            <td id="row12-4">$85.48</td>
+            <td id="row12-5">$17.10</td>
+            <td id="row12-6">$74.47</td>
+            <td id="row12-7">$65.38</td>
+            <td id="row12-8">$74.20</td>
+            <td id="row12-9">$68.09</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <hr>
+    <div class="table-outline mx-5 my-5">
+      <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th scope="col" style="background-color: yellow;">Testing Codes</th>
+              <th scope="col">Description</th>
+              <th scope="col">Charge</th>
+              <th scope="col">Self Pay</th>
+              <th scope="col">Medicare Rate</th>
+              <th scope="col">Medicare Only</th>
+              <th scope="col">Florida Blue</th>
+              <th scope="col">Aetna</th>
+              <th scope="col">Cigna</th>
+              <th scope="col">United Commercial</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">92133</th>
+              <td id="row13-1">OCT RNFL</td>
+              <td id="row13-2">$72.56</td>
+              <td id="row13-3">$54.42</td>
+              <td id="row13-4">$35.00</td>
+              <td id="row13-5">$7.00</td>
+              <td id="row13-6">$31.46</td>
+              <td id="row13-7">$28.24</td>
+              <td id="row13-8">$31.41</td>
+              <td id="row13-9">$28.82</td>
+            </tr>
+            <tr>
+              <th scope="row">92083</th>
+              <td id="row14-1">Visual Field Exam</td>
+              <td id="row14-2">$122.38</td>
+              <td id="row14-3">$91.79</td>
+              <td id="row14-4">$59.13</td>
+              <td id="row14-5">$11.83</td>
+              <td id="row14-6">$53.77</td>
+              <td id="row14-7">$47.65</td>
+              <td id="row14-8">$52.76</td>
+              <td id="row14-9">$48.41</td>
+            </tr>
+            <tr>
+              <th scope="row">92020</th>
+              <td id="row15-1">Gonioscopy</td>
+              <td id="row15-2">$55.20</td>
+              <td id="row15-3">$41.40</td>
+              <td id="row15-4">$26.39</td>
+              <td id="row15-5">$5.28</td>
+              <td id="row15-6">$23.42</td>
+              <td id="row15-7">$20.12</td>
+              <td id="row15-8">$23.39</td>
+              <td id="row15-9">$21.46</td>
+            </tr>
+            <tr>
+              <th scope="row">92202</th>
+              <td id="row16-1">Ophthalmoscopy of Optic Nerve or Macula</td>
+              <td id="row16-2">$31.34</td>
+              <td id="row16-3">$23.51</td>
+              <td id="row16-4">$14.98</td>
+              <td id="row16-5">$3.00</td>
+              <td id="row16-6">$15.45</td>
+              <td id="row16-7">$11.92</td>
+              <td id="row16-8">$13.63</td>
+              <td id="row16-9">$12.50</td>
+            </tr>
+            <tr>
+              <th scope="row">76514</th>
+              <td id="row17-1">Pachymetry</td>
+              <td id="row17-2">$23.38</td>
+              <td id="row17-3">$17.54</td>
+              <td id="row17-4">$11.18</td>
+              <td id="row17-5">$2.24</td>
+              <td id="row17-6">$10.95</td>
+              <td id="row17-7">$10.18</td>
+              <td id="row17-8">$8.54</td>
+              <td id="row17-9">$9.52</td>
+            </tr>
+            <tr>
+              <th scope="row">92134</th>
+              <td id="row18-1">OCT Macula</td>
+              <td id="row18-2">$79.92</td>
+              <td id="row18-3">$59.94</td>
+              <td id="row18-4">$38.52</td>
+              <td id="row18-5">$7.70</td>
+              <td id="row18-6">$34.74</td>
+              <td id="row18-7">$31.13</td>
+              <td id="row18-8">$34.39</td>
+              <td id="row18-9">$31.56</td>
+            </tr>
+            <tr>
+              <th scope="row">92015</th>
+              <td id="row19-1">Refraction</td>
+              <td id="row19-2">$45.00</td>
+              <td id="row19-3">$45.00</td>
+              <td id="row19-4">$45.00</td>
+              <td id="row19-5">$45.00</td>
+              <td id="row19-6">$45.00</td>
+              <td id="row19-7">$15.11</td>
+              <td id="row19-8">$45.00</td>
+              <td id="row19-9">$45.00</td>
+            </tr>
+            <tr>
+              <th scope="row">92136</th>
+              <td id="row20-1">IOL Master (A-Scan)</td>
+              <td id="row20-2">$97.86</td>
+              <td id="row20-3">$73.40</td>
+              <td id="row20-4">$44.92</td>
+              <td id="row20-5">$8.89</td>
+              <td id="row20-6">$58.79</td>
+              <td id="row20-7">$58.24</td>
+              <td id="row20-8">$52.25</td>
+              <td id="row20-9">$47.94</td>
+            </tr>
+            <tr>
+              <th scope="row">92136-26</th>
+              <td id="row21-1">IOL Master 2nd Eye</td>
+              <td id="row21-2">$57.80</td>
+              <td id="row21-3">$43.35</td>
+              <td id="row21-4">$28.90</td>
+              <td id="row21-5">$5.78</td>
+              <td id="row21-6">$26.87</td>
+              <td id="row21-7">$23.69</td>
+              <td id="row21-8">$26.57</td>
+              <td id="row21-9">$24.38</td>
+            </tr>
+            <tr>
+              <th scope="row">76519</th>
+              <td id="row22-1">A-Scan (ultrasound)</td>
+              <td id="row22-2">$131.64</td>
+              <td id="row22-3">$98.73</td>
+              <td id="row22-4">$63.87</td>
+              <td id="row22-5">$12.77</td>
+              <td id="row22-6">$55.58</td>
+              <td id="row22-7">$44.71</td>
+              <td id="row22-8">$45.89</td>
+              <td id="row22-9">$51.14</td>
+            </tr>
+            <tr>
+              <th scope="row">92132</th>
+              <td id="row23-1">OCT Anterior Segment</td>
+              <td id="row23-2">$61.74</td>
+              <td id="row23-3">$46.31</td>
+              <td id="row23-4">$30.15</td>
+              <td id="row23-5">$6.03</td>
+              <td id="row23-6">$26.64</td>
+              <td id="row23-7">INVALID</td>
+              <td id="row23-8">$26.60</td>
+              <td id="row23-9">$24.41</td>
+            </tr>
+            <tr>
+              <th scope="row">92201</th>
+              <td id="row24-1">Ophthalmoscopy of Peripheral Retina </td>
+              <td id="row24-2">$19.16</td>
+              <td id="row24-3">$14.37</td>
+              <td id="row24-4">$23.82</td>
+              <td id="row24-5">$4.76</td>
+              <td id="row24-6">$21.43</td>
+              <td id="row24-7">INVALID</td>
+              <td id="row24-8">$21.54</td>
+              <td id="row24-9">$19.77</td>
+            </tr>
+            <tr>
+              <th scope="row">92025</th>
+              <td id="row25-1">Corneal Topography</td>
+              <td id="row25-2">$71.06</td>
+              <td id="row25-3">$53.30</td>
+              <td id="row25-4">$34.60</td>
+              <td id="row25-5">$6.92</td>
+              <td id="row25-6">$31.97</td>
+              <td id="row25-7">$28.43</td>
+              <td id="row25-8">$31.04</td>
+              <td id="row25-9">$28.48</td>
+            </tr>
+            <tr>
+              <th scope="row">92082</th>
+              <td id="row26-1">Esterman VF (Always Cash Pay)</td>
+              <td id="row26-2">$90.76</td>
+              <td id="row26-3">$68.07</td>
+              <td id="row26-4">$44.33</td>
+              <td id="row26-5">$44.33</td>
+              <td id="row26-6">$44.33</td>
+              <td id="row26-7">$44.33</td>
+              <td id="row26-8">$44.33</td>
+              <td id="row26-9">$44.33</td>
+            </tr>
+            <tr>
+              <th scope="row">$RYZ</th>
+              <td id="row27-1">Ryzumvi</td>
+              <td id="row27-2">$40.00</td>
+              <td id="row27-3">$40.00</td>
+              <td id="row27-4">$40.00</td>
+              <td id="row27-5">$40.00</td>
+              <td id="row27-6">$40.00</td>
+              <td id="row27-7">$40.00</td>
+              <td id="row27-8">$40.00</td>
+              <td id="row27-9">$40.00</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <hr>
+      <div class="table-outline mx-5 my-5">
+        <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col" style="background-color: yellow;">Office Procedures</th>
+                <th scope="col">Description</th>
+                <th scope="col">Charge</th>
+                <th scope="col">Self Pay</th>
+                <th scope="col">Medicare Rate</th>
+                <th scope="col">Medicare Only</th>
+                <th scope="col">Florida Blue</th>
+                <th scope="col">Aetna</th>
+                <th scope="col">Cigna</th>
+                <th scope="col">United Commercial</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">11440</th>
+                <td id="row28-1">Excise skin less than 0.5mm</td>
+                <td id="row28-2">$276.00</td>
+                <td id="row28-3">$207.00</td>
+                <td id="row28-4">$137.88</td>
+                <td id="row28-5">$27.58</td>
+                <td id="row28-6">$117.19</td>
+                <td id="row28-7">$96.52</td>
+                <td id="row28-8">$118.47</td>
+                <td id="row28-9">$108.71</td>
+              </tr>
+              <tr>
+                <th scope="row">65855</th>
+                <td id="row29-1">SLT</td>
+                <td id="row29-2">$487.20</td>
+                <td id="row29-3">$365.40</td>
+                <td id="row29-4">$235.46</td>
+                <td id="row29-5">$47.09</td>
+                <td id="row29-6">$211.58</td>
+                <td id="row29-7">$186.23</td>
+                <td id="row29-8">$210.99</td>
+                <td id="row29-9">$193.62</td>
+              </tr>
+              <tr>
+                <th scope="row">66761</th>
+                <td id="row30-1">Iridotomy</td>
+                <td id="row30-2">$590.52</td>
+                <td id="row30-3">$442.89</td>
+                <td id="row30-4">$285.49</td>
+                <td id="row30-5">$57.10</td>
+                <td id="row30-6">$255.03</td>
+                <td id="row30-7">$224.27</td>
+                <td id="row30-8">$254.52</td>
+                <td id="row30-9">$233.56</td>
+              </tr>
+              <tr>
+                <th scope="row">68761</th>
+                <td id="row31-1">Punctal Plug</td>
+                <td id="row31-2">$291.10</td>
+                <td id="row31-3">$218.33</td>
+                <td id="row31-4">$139.33</td>
+                <td id="row31-5">$27.87</td>
+                <td id="row31-6">$126.26</td>
+                <td id="row31-7">$95.29</td>
+                <td id="row31-8">$125.46</td>
+                <td id="row31-9">$115.13</td>
+              </tr>
+              <tr>
+                <th scope="row">66821</th>
+                <td id="row32-1">YAG Capsulotomy</td>
+                <td id="row32-2">$656.68</td>
+                <td id="row32-3">$492.51</td>
+                <td id="row32-4">$318.36</td>
+                <td id="row32-5">$63.67</td>
+                <td id="row32-6">$282.85</td>
+                <td id="row32-7">$248.79</td>
+                <td id="row32-8">$282.04</td>
+                <td id="row32-9">$258.81</td>
+              </tr>
+              <tr>
+                <th scope="row">92071</th>
+                <td id="row33-1">Bandage Contact Lens Fitting</td>
+                <td id="row33-2">$72.80</td>
+                <td id="row33-3">$54.60</td>
+                <td id="row33-4">$35.11</td>
+                <td id="row33-5">$7.02</td>
+                <td id="row33-6">$32.35</td>
+                <td id="row33-7">$28.51</td>
+                <td id="row33-8">$32.05</td>
+                <td id="row33-9">$29.41</td>
+              </tr>
+              <tr>
+                <th scope="row">67820</th>
+                <td id="row34-1">Removal of Eyelashes</td>
+                <td id="row34-2">$38.44</td>
+                <td id="row34-3">$28.83</td>
+                <td id="row34-4">$18.69</td>
+                <td id="row34-5">$3.74</td>
+                <td id="row34-6">$27.84</td>
+                <td id="row34-7">$29.89</td>
+                <td id="row34-8">$22.57</td>
+                <td id="row34-9">$20.71</td>
+              </tr>
+              <tr>
+                <th scope="row">65800</th>
+                <td id="row35-1">Paracentesis</td>
+                <td id="row35-2">$243.00</td>
+                <td id="row35-3">$182.25</td>
+                <td id="row35-4">$115.08</td>
+                <td id="row35-5">$23.02</td>
+                <td id="row35-6">$103.35</td>
+                <td id="row35-7">$91.10</td>
+                <td id="row35-8">$102.43</td>
+                <td id="row35-9">$94.00</td>
+              </tr>
+              <tr>
+                <th scope="row">66250</th>
+                <td id="row36-1">Surgery Revision</td>
+                <td id="row36-2">$1,491.98</td>
+                <td id="row36-3">$1,118.99</td>
+                <td id="row36-4">$717.95</td>
+                <td id="row36-5">$143.59</td>
+                <td id="row36-6">$641.16</td>
+                <td id="row36-7">$553.05</td>
+                <td id="row36-8">$638.94</td>
+                <td id="row36-9">$586.32</td>
+              </tr>
+              <tr>
+                <th scope="row">68801</th>
+                <td id="row37-1">Dilate/Irrigate Puncta</td>
+                <td id="row37-2">$189.10</td>
+                <td id="row37-3">$141.83</td>
+                <td id="row37-4">$91.18</td>
+                <td id="row37-5">$18.24</td>
+                <td id="row37-6">$76.78</td>
+                <td id="row37-7">$63.83</td>
+                <td id="row37-8">$77.50</td>
+                <td id="row37-9">$71.12</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <hr>
+        <div class="table-outline mx-5 my-5">
+          <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col" style="background-color: yellow;">OR Surgeries</th>
+                  <th scope="col">Description</th>
+                  <th scope="col">Charge</th>
+                  <th scope="col">Self Pay</th>
+                  <th scope="col">Medicare Rate</th>
+                  <th scope="col">Medicare Only</th>
+                  <th scope="col">Florida Blue</th>
+                  <th scope="col">Aetna</th>
+                  <th scope="col">Cigna</th>
+                  <th scope="col">United Commercial</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">66984</th>
+                  <td id="row38-1">Cataract / IOL</td>
+                  <td id="row38-2">$1,073.20</td>
+                  <td id="row38-3">$804.90</td>
+                  <td id="row38-4">$520.79</td>
+                  <td id="row38-5">$104.16</td>
+                  <td id="row38-6">$549.59</td>
+                  <td id="row38-7">$486.20</td>
+                  <td id="row38-8">$467.85</td>
+                  <td id="row38-9">$429.32</td>
+                </tr>
+                <tr>
+                  <th scope="row">66982</th>
+                  <td id="row39-1">Cataract / IOL, Complex</td>
+                  <td id="row39-2">$1,470.90</td>
+                  <td id="row39-3">$1,103.18</td>
+                  <td id="row39-4">$713.62</td>
+                  <td id="row39-5">$142.72</td>
+                  <td id="row39-6">$684.03</td>
+                  <td id="row39-7">$605.22</td>
+                  <td id="row39-8">$642.69</td>
+                  <td id="row39-9">$589.76</td>
+                </tr>
+                <tr>
+                  <th scope="row">66180</th>
+                  <td id="row40-1">Ahmed or Baerveld with graft</td>
+                  <td id="row40-2">$2,247.18</td>
+                  <td id="row40-3">$1,685.39</td>
+                  <td id="row40-4">$1,089.78</td>
+                  <td id="row40-5">$217.96</td>
+                  <td id="row40-6">$979.03</td>
+                  <td id="row40-7">$864.34</td>
+                  <td id="row40-8">$975.61</td>
+                  <td id="row40-9">$895.27</td>
+                </tr>
+                <tr>
+                  <th scope="row">66170</th>
+                  <td id="row41-1">Trabeculectomy</td>
+                  <td id="row41-2">$2,153.84</td>
+                  <td id="row41-3">$1,615.38</td>
+                  <td id="row41-4">$1,045.31</td>
+                  <td id="row41-5">$209.06</td>
+                  <td id="row41-6">$940.61</td>
+                  <td id="row41-7">$830.47</td>
+                  <td id="row41-8">$935.18</td>
+                  <td id="row41-9">$858.16</td>
+                </tr>
+                <tr>
+                  <th scope="row">66991</th>
+                  <td id="row42-1">Cataract / IOL w Hydrus</td>
+                  <td id="row42-2">$1,345.88</td>
+                  <td id="row42-3">$1,009.41</td>
+                  <td id="row42-4">$653.03</td>
+                  <td id="row42-5">$130.61</td>
+                  <td id="row42-6">$555.08</td>
+                  <td id="row42-7">$489.77</td>
+                  <td id="row42-8">$888.51</td>
+                  <td id="row42-9">$509.36</td>
+                </tr>
+                <tr>
+                  <th scope="row">66989</th>
+                  <td id="row43-1">Cataract / IOL , Complex w Hydrus</td>
+                  <td id="row43-2">$1,675.18</td>
+                  <td id="row43-3">$1,256.39</td>
+                  <td id="row43-4">$845.83</td>
+                  <td id="row43-5">$169.17</td>
+                  <td id="row43-6">$718.96</td>
+                  <td id="row43-7">$634.37</td>
+                  <td id="row43-8">$555.08</td>
+                  <td id="row43-9">$659.75</td>
+                </tr>
+                <tr>
+                  <th scope="row">66183</th>
+                  <td id="row44-1">XEN ab externo</td>
+                  <td id="row44-2">$2,027.76</td>
+                  <td id="row44-3">$1,520.82</td>
+                  <td id="row44-4">$984.26</td>
+                  <td id="row44-5">$196.85</td>
+                  <td id="row44-6">$885.53</td>
+                  <td id="row44-7">$738.20</td>
+                  <td id="row44-8">$880.31</td>
+                  <td id="row44-9">$807.81</td>
+                </tr>
+                <tr>
+                  <th scope="row">0449T</th>
+                  <td id="row45-1">XEN ab interno</td>
+                  <td id="row45-2">INVALID</td>
+                  <td id="row45-3">INVALID</td>
+                  <td id="row45-4">INVALID</td>
+                  <td id="row45-5">INVALID</td>
+                  <td id="row45-6">INVALID</td>
+                  <td id="row45-7">INVALID</td>
+                  <td id="row45-8">INVALID</td>
+                  <td id="row45-9">$606.10</td>
+                </tr>
+                <tr>
+                  <th scope="row">66174</th>
+                  <td id="row46-1">OMNI Canaloplasty</td>
+                  <td id="row46-2">$1,481.90</td>
+                  <td id="row46-3">$1,111.43</td>
+                  <td id="row46-4">$595.49</td>
+                  <td id="row46-5">$119.10</td>
+                  <td id="row46-6">$650.99</td>
+                  <td id="row46-7">$446.62</td>
+                  <td id="row46-8">$811.26</td>
+                  <td id="row46-9">$259.76</td>
+                </tr>
+                <tr>
+                  <th scope="row">66172</th>
+                  <td id="row47-1">Trabeculectomy with Scarring</td>
+                  <td id="row47-2">$2,349.84</td>
+                  <td id="row47-3">$1,762.38</td>
+                  <td id="row47-4">$1,140.26</td>
+                  <td id="row47-5">$228.05</td>
+                  <td id="row47-6">$1,023.87</td>
+                  <td id="row47-7">$855.20</td>
+                  <td id="row47-8">$1,017.59</td>
+                  <td id="row47-9">$933.79</td>
+                </tr>
+                <tr>
+                  <th scope="row">66185</th>
+                  <td id="row48-1">Tube Revision with graft</td>
+                  <td id="row48-2">$1,675.18</td>
+                  <td id="row48-3">$1,256.39</td>
+                  <td id="row48-4">$813.32</td>
+                  <td id="row48-5">$162.66</td>
+                  <td id="row48-6">$726.38</td>
+                  <td id="row48-7">$609.99</td>
+                  <td id="row48-8">$723.74</td>
+                  <td id="row48-9">$664.14</td>
+                </tr>
+                <tr>
+                  <th scope="row">66184</th>
+                  <td id="row49-1">Tube Revision without graft</td>
+                  <td id="row49-2">$1,555.74</td>
+                  <td id="row49-3">$1,166.81</td>
+                  <td id="row49-4">$756.05</td>
+                  <td id="row49-5">$151.21</td>
+                  <td id="row49-6">$674.17</td>
+                  <td id="row49-7">$567.04</td>
+                  <td id="row49-8">$671.22</td>
+                  <td id="row49-9">$615.94</td>
+                </tr>
+                <tr>
+                  <th scope="row">68841</th>
+                  <td id="row50-1">Dextenza in OR</td>
+                  <td id="row50-2">$75.58</td>
+                  <td id="row50-3">$56.69</td>
+                  <td id="row50-4">$36.76</td>
+                  <td id="row50-5">INVALID</td>
+                  <td id="row50-6">INVALID</td>
+                  <td id="row50-7">INVALID</td>
+                  <td id="row50-8">INVALID</td>
+                  <td id="row50-9">INVALID</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+      
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
+integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="index.js"></script>
+
+</body>
+</html>

@@ -89,6 +89,8 @@ function initLoginPage() {
     const demoLoginBtn = document.getElementById('demo-login');
     const messageDiv = document.getElementById('login-message');
 
+    const clearLoginBtn = document.getElementById('clear-login');
+
     if (loginForm) {
         loginForm.addEventListener('submit', function(event) {
             event.preventDefault();
@@ -98,11 +100,12 @@ function initLoginPage() {
         });
     }
 
-    if (demoLoginBtn) {
-        demoLoginBtn.addEventListener('click', function() {
-            document.getElementById('username').value = DEMO_CREDENTIALS.username;
-            document.getElementById('password').value = DEMO_CREDENTIALS.password;
-            handleLogin(DEMO_CREDENTIALS.username, DEMO_CREDENTIALS.password);
+    if (clearLoginBtn) {
+        clearLoginBtn.addEventListener('click', function() {
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            messageDiv.textContent = '';
+            messageDiv.className = 'message';
         });
     }
 }

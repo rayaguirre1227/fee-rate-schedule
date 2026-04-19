@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACGC Login - Table Editor</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <img src="images/ACGC Logo.png" alt="ACGC Logo" class="logo">
+            <h1>ACGC Table Editor Login</h1>
+        </div>
+        <nav>
+            <a href="login.html" class="active">Login</a>
+            <a href="index.html">Page 1: Price Calculator</a>
+            <a href="first.html">Page 2: Master Fee Schedule</a>
+            <a href="#" id="admin-link">Admin</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="login-container">
+            <h2>Please Login to Continue</h2>
+            <p>Access the table editor and price calculator by logging in with your credentials.</p>
+
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required autocomplete="username">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required autocomplete="current-password">
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" id="login-button">Login</button>
+                    <button type="button" id="demo-login">Use Demo Account</button>
+                </div>
+
+                <div id="login-message" class="message"></div>
+            </form>
+
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 ACGC. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

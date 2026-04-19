@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACGC Master Fee Schedule - Page 1</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <img src="images/ACGC Logo.png" alt="ACGC Logo" class="logo">
+            <h1>ACGC Master Fee Schedule</h1>
+        </div>
+        <nav>
+            <a href="index.html">Page 1: Price Calculator</a>
+            <a href="first.html" class="active">Page 2: Master Fee Schedule</a>
+            <a href="#" id="admin-link">Admin</a>
+        </nav>
+    </header>
+    
+        <section class="instructions">
+            <h3>Instructions</h3>
+            <ul>
+                <li>Use Admin panel to login if the Master tables needs to be edited</li>
+                <li>Click on any cell to edit its content (when logged in)</li>
+                <li>Use buttons to add/delete rows and columns</li>
+                <li>Table data is saved automatically upon using the Logout button or closing the browser</li>
+            </ul>
+        </section>
+
+    <main>
+        <section class="controls">
+            <div class="button-group">
+                <button id="add-row">Add Row</button>
+                <button id="add-col">Add Column</button>
+                <button id="delete-row">Delete Selected Row</button>
+                <button id="delete-col">Delete Selected Column</button>
+            </div>
+        </section>
+
+        <section class="table-container">
+            <table id="main-table">
+                <thead>
+                    <tr>
+                        <th class="header-cell">Codes</th>
+                        <th class="header-cell">Column 1</th>
+                        <th class="header-cell">Column 2</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="row-header">Row 1</td>
+                        <td contenteditable="true">Cell 1-1</td>
+                        <td contenteditable="true">Cell 1-2</td>
+                    </tr>
+                    <tr>
+                        <td class="row-header">Row 2</td>
+                        <td contenteditable="true">Cell 2-1</td>
+                        <td contenteditable="true">Cell 2-2</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2026 ACGC. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

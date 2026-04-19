@@ -8,6 +8,9 @@ let lastSelectedCell = null;
 let lastSelectedRow = null;
 let lastSelectedColumn = null;
 
+// Cached DOM elements for performance
+let mainTable, tableTbody, tableThead, addRowBtn, addColBtn, deleteRowBtn, deleteColBtn, refreshBtn, loadingOverlay;
+
 // Debounce utility
 function debounce(func, wait) {
     let timeout;
@@ -38,8 +41,26 @@ const DEMO_CREDENTIALS = {
 // API base URL
 const API_BASE = '';
 
+// Cache DOM elements for better performance
+function cacheDOMElements() {
+    mainTable = document.getElementById('main-table');
+    if (mainTable) {
+        tableTbody = mainTable.querySelector('tbody');
+        tableThead = mainTable.querySelector('thead tr');
+    }
+    addRowBtn = document.getElementById('add-row');
+    addColBtn = document.getElementById('add-col');
+    deleteRowBtn = document.getElementById('delete-row');
+    deleteColBtn = document.getElementById('delete-col');
+    refreshBtn = document.getElementById('refresh-data');
+    loadingOverlay = document.getElementById('loading-overlay');
+}
+
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', async function() {
+    // Cache DOM elements
+    cacheDOMElements();
+
     // Check which page we're on
     const isLoginPage = document.querySelector('nav a[href="login.html"].active') !== null;
     const isFirstPage = document.querySelector('nav a[href="first.html"].active') !== null;
@@ -180,12 +201,6 @@ function redirectToLogin() {
 // ========== PAGE 1: TABLE EDITOR ==========
 
 function initTablePage() {
-    const table = document.getElementById('main-table');
-    const addRowBtn = document.getElementById('add-row');
-    const addColBtn = document.getElementById('add-col');
-    const deleteRowBtn = document.getElementById('delete-row');
-    const deleteColBtn = document.getElementById('delete-col');
-
     // Set editing based on authentication status
     editingEnabled = isAuthenticated;
 
@@ -202,19 +217,22 @@ function initTablePage() {
     updateHeadersEditable();
 
     // Event listeners
-    addRowBtn.addEventListener('click', addRow);
-    addColBtn.addEventListener('click', addColumn);
-    deleteRowBtn.addEventListener('click', deleteSelectedRow);
-    deleteColBtn.addEventListener('click', deleteSelectedColumn);
+    if (addRowBtn) addRowBtn.addEventListener('click', addRow);
+    if (addColBtn) addColBtn.addEventListener('click', addColumn);
+    if (deleteRowBtn) deleteRowBtn.addEventListener('click', deleteSelectedRow);
+    if (deleteColBtn) deleteColBtn.addEventListener('click', deleteSelectedColumn);
+    if (refreshBtn) refreshBtn.addEventListener('click', refreshTableData);
 
     // Save table data when cells are edited (debounced to avoid excessive calls)
-    table.addEventListener('input', debouncedSaveTableData);
-    table.addEventListener('blur', formatEditedTableCell, true);
-    table.addEventListener('blur', debouncedSaveTableData, true);
+    if (mainTable) {
+        mainTable.addEventListener('input', debouncedSaveTableData);
+        mainTable.addEventListener('blur', formatEditedTableCell, true);
+        mainTable.addEventListener('blur', debouncedSaveTableData, true);
 
-    // Cell selection highlighting
-    table.addEventListener('click', handleCellSelection);
-    table.addEventListener('focus', handleCellSelection, true);
+        // Cell selection highlighting
+        mainTable.addEventListener('click', handleCellSelection);
+        mainTable.addEventListener('focus', handleCellSelection, true);
+    }
 }
 
 function initializeTable() {
@@ -230,9 +248,10 @@ function initializeTable() {
 }
 
 function extractTableData() {
-    const table = document.getElementById('main-table');
-    const rows = table.querySelectorAll('tbody tr');
-    const headers = table.querySelectorAll('thead th');
+    if (!mainTable) return;
+
+    const rows = tableTbody ? tableTbody.querySelectorAll('tr') : [];
+    const headers = tableThead ? tableThead.querySelectorAll('th') : [];
 
     tableData = [];
 
@@ -265,66 +284,67 @@ function extractTableData() {
 }
 
 function rebuildTableFromData() {
-    const table = document.getElementById('main-table');
-    const tbody = table.querySelector('tbody');
-    const thead = table.querySelector('thead tr');
+    if (!mainTable || !tableTbody || !tableThead) return;
 
-    // Clear existing rows (keep header row)
-    tbody.innerHTML = '';
+    // Use requestAnimationFrame for smoother updates
+    requestAnimationFrame(() => {
+        // Clear existing rows (keep header row)
+        tableTbody.innerHTML = '';
 
-    // Rebuild header if we have column data
-    if (tableData.length > 0 && tableData[0].cells.length > 0) {
-        // Clear existing headers (keep first "#" header)
-        while (thead.children.length > 1) {
-            thead.lastChild.remove();
+        // Rebuild header if we have column data
+        if (tableData.length > 0 && tableData[0].cells.length > 0) {
+            // Clear existing headers (keep first "#" header)
+            while (tableThead.children.length > 1) {
+                tableThead.lastChild.remove();
+            }
+
+            // Add column headers
+            tableData[0].cells.forEach((cell, colIndex) => {
+                const th = document.createElement('th');
+                th.className = 'header-cell';
+                th.textContent = cell.columnHeader || `Column ${colIndex + 1}`;
+                th.contentEditable = editingEnabled;
+                th.dataset.col = colIndex;
+                tableThead.appendChild(th);
+            });
         }
 
-        // Add column headers
-        tableData[0].cells.forEach((cell, colIndex) => {
-            const th = document.createElement('th');
-            th.className = 'header-cell';
-            th.textContent = cell.columnHeader || `Column ${colIndex + 1}`;
-            th.contentEditable = editingEnabled;
-            th.dataset.col = colIndex;
-            thead.appendChild(th);
-        });
-    }
+        // Use DocumentFragment for batch DOM updates
+        const fragment = document.createDocumentFragment();
 
-    // Use DocumentFragment for batch DOM updates
-    const fragment = document.createDocumentFragment();
+        // Rebuild rows
+        tableData.forEach((rowData, rowIndex) => {
+            const tr = document.createElement('tr');
 
-    // Rebuild rows
-    tableData.forEach((rowData, rowIndex) => {
-        const tr = document.createElement('tr');
+            // Row header cell
+            const rowHeaderCell = document.createElement('td');
+            rowHeaderCell.className = 'row-header';
+            rowHeaderCell.textContent = rowData.rowHeader || `Row ${rowIndex + 1}`;
+            rowHeaderCell.contentEditable = editingEnabled;
+            rowHeaderCell.dataset.row = rowIndex;
+            tr.appendChild(rowHeaderCell);
 
-        // Row header cell
-        const rowHeaderCell = document.createElement('td');
-        rowHeaderCell.className = 'row-header';
-        rowHeaderCell.textContent = rowData.rowHeader || `Row ${rowIndex + 1}`;
-        rowHeaderCell.contentEditable = editingEnabled;
-        rowHeaderCell.dataset.row = rowIndex;
-        tr.appendChild(rowHeaderCell);
+            // Data cells
+            rowData.cells.forEach((cell, cellIndex) => {
+                const td = document.createElement('td');
+                td.textContent = cell.content;
+                td.contentEditable = editingEnabled;
+                td.dataset.row = rowIndex;
+                td.dataset.col = cellIndex;
+                tr.appendChild(td);
+            });
 
-        // Data cells
-        rowData.cells.forEach((cell, cellIndex) => {
-            const td = document.createElement('td');
-            td.textContent = cell.content;
-            td.contentEditable = editingEnabled;
-            td.dataset.row = rowIndex;
-            td.dataset.col = cellIndex;
-            tr.appendChild(td);
+            fragment.appendChild(tr);
         });
 
-        fragment.appendChild(tr);
+        tableTbody.appendChild(fragment);
     });
-
-    tbody.appendChild(fragment);
 }
 
 function addRow() {
-    const table = document.getElementById('main-table');
-    const tbody = table.querySelector('tbody');
-    const headers = table.querySelectorAll('thead th');
+    if (!mainTable || !tableTbody || !tableThead) return;
+
+    const headers = tableThead.querySelectorAll('th');
     const colCount = headers.length - 1; // Excluding row header
 
     const newRowIndex = tableData.length + 1;
@@ -348,7 +368,7 @@ function addRow() {
         tr.appendChild(td);
     }
 
-    tbody.appendChild(tr);
+    tableTbody.appendChild(tr);
 
     // Update tableData
     const rowData = {
@@ -368,9 +388,7 @@ function addRow() {
 }
 
 function addColumn() {
-    const table = document.getElementById('main-table');
-    const thead = table.querySelector('thead tr');
-    const tbody = table.querySelector('tbody');
+    if (!mainTable || !tableThead || !tableTbody) return;
 
     const newColIndex = tableData[0] ? tableData[0].cells.length + 1 : 1;
 
@@ -380,10 +398,10 @@ function addColumn() {
     th.textContent = `Column ${newColIndex}`;
     th.contentEditable = editingEnabled;
     th.dataset.col = newColIndex - 1;
-    thead.appendChild(th);
+    tableThead.appendChild(th);
 
     // Add cells to each row
-    const rows = tbody.querySelectorAll('tr');
+    const rows = tableTbody.querySelectorAll('tr');
     rows.forEach((row, rowIndex) => {
         const td = document.createElement('td');
         td.textContent = `Cell ${rowIndex + 1}-${newColIndex}`;
@@ -407,8 +425,8 @@ function addColumn() {
 }
 
 function deleteSelectedRow() {
-    const table = document.getElementById('main-table');
-    const tbody = table.querySelector('tbody');
+    if (!mainTable || !tableTbody) return;
+
     const selectedRow = getSelectedRow();
 
     if (selectedRow === -1) {
@@ -416,13 +434,13 @@ function deleteSelectedRow() {
         return;
     }
 
-    if (tbody.rows.length <= 1) {
+    if (tableTbody.rows.length <= 1) {
         alert('Cannot delete the last row!');
         return;
     }
 
     // Remove from DOM
-    tbody.deleteRow(selectedRow);
+    tableTbody.deleteRow(selectedRow);
 
     // Remove from tableData
     tableData.splice(selectedRow, 1);
@@ -434,8 +452,8 @@ function deleteSelectedRow() {
 }
 
 function deleteSelectedColumn() {
-    const table = document.getElementById('main-table');
-    const thead = table.querySelector('thead tr');
+    if (!mainTable || !tableThead || !tableTbody) return;
+
     const selectedCol = getSelectedColumn();
 
     if (selectedCol === -1) {
@@ -443,17 +461,16 @@ function deleteSelectedColumn() {
         return;
     }
 
-    if (thead.cells.length <= 2) { // At least one data column + row header
+    if (tableThead.cells.length <= 2) { // At least one data column + row header
         alert('Cannot delete the last column!');
         return;
     }
 
     // Remove column header
-    thead.deleteCell(selectedCol + 1); // +1 for row header
+    tableThead.deleteCell(selectedCol + 1); // +1 for row header
 
     // Remove cells from each row
-    const tbody = table.querySelector('tbody');
-    const rows = tbody.querySelectorAll('tr');
+    const rows = tableTbody.querySelectorAll('tr');
 
     rows.forEach((row, rowIndex) => {
         row.deleteCell(selectedCol + 1); // +1 for row header
@@ -512,8 +529,9 @@ function getSelectedColumn() {
 }
 
 function updateRowHeaders() {
-    const table = document.getElementById('main-table');
-    const rows = table.querySelectorAll('tbody tr');
+    if (!mainTable || !tableTbody) return;
+
+    const rows = tableTbody.querySelectorAll('tr');
 
     rows.forEach((row, index) => {
         const rowHeaderCell = row.querySelector('.row-header');
@@ -529,8 +547,9 @@ function updateRowHeaders() {
 }
 
 function updateColumnHeaders() {
-    const table = document.getElementById('main-table');
-    const headers = table.querySelectorAll('thead th');
+    if (!mainTable || !tableThead) return;
+
+    const headers = tableThead.querySelectorAll('th');
 
     headers.forEach((header, index) => {
         if (index > 0) { // Skip first header (#)
@@ -574,6 +593,13 @@ async function saveTableData() {
     // Extract current table data
     extractTableData();
 
+    // Check if data has actually changed
+    const currentDataStr = JSON.stringify(tableData);
+    if (saveTableData.lastSavedData === currentDataStr) {
+        return; // No changes, skip save
+    }
+    saveTableData.lastSavedData = currentDataStr;
+
     // Save to server
     try {
         await fetch('/api/table-data', {
@@ -592,8 +618,14 @@ async function saveTableData() {
     updatePriceMapping();
 }
 
+// Initialize last saved data
+saveTableData.lastSavedData = null;
+
 async function loadSavedData() {
     try {
+        // Show loading overlay
+        if (loadingOverlay) loadingOverlay.style.display = 'flex';
+
         // Load from server
         const response = await fetch('/api/table-data');
         const result = await response.json();
@@ -607,9 +639,46 @@ async function loadSavedData() {
         if (savedData) {
             tableData = JSON.parse(savedData);
         }
+    } finally {
+        // Hide loading overlay
+        if (loadingOverlay) loadingOverlay.style.display = 'none';
     }
 
+    // Set last saved data for change detection
+    saveTableData.lastSavedData = JSON.stringify(tableData);
+
     // Note: editingEnabled is now determined by authentication status, not saved state
+}
+
+async function refreshTableData() {
+    try {
+        // Show loading state
+        if (refreshBtn) {
+            refreshBtn.textContent = 'Loading...';
+            refreshBtn.disabled = true;
+        }
+
+        // Load latest data from server
+        const response = await fetch('/api/table-data');
+        const result = await response.json();
+        if (result.success && result.data) {
+            tableData = result.data;
+            // Rebuild the table with new data
+            rebuildTableFromData();
+            updateHeadersEditable();
+        } else {
+            alert('Failed to refresh data from server.');
+        }
+    } catch (error) {
+        console.error('Error refreshing table data:', error);
+        alert('Error refreshing data. Please check your connection.');
+    } finally {
+        // Reset button state
+        if (refreshBtn) {
+            refreshBtn.textContent = 'Refresh Data';
+            refreshBtn.disabled = false;
+        }
+    }
 }
 
 function parseAmount(value) {

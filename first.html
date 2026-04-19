@@ -25,7 +25,8 @@
                 <li>Use Admin panel to login if the Master tables needs to be edited</li>
                 <li>Click on any cell to edit its content (when logged in)</li>
                 <li>Use buttons to add/delete rows and columns</li>
-                <li>Table data is saved automatically upon using the Logout button or closing the browser</li>
+                <li>Table data is automatically saved to the database and visible across all browsers</li>
+                <li>Use "Refresh Data" to load the latest changes from other users</li>
             </ul>
         </section>
 
@@ -40,6 +41,9 @@
         </section>
 
         <section class="table-container">
+            <div id="loading-overlay" class="loading-overlay" style="display: none;">
+                <div class="loading-spinner">Loading table data...</div>
+            </div>
             <table id="main-table">
                 <thead>
                     <tr>

@@ -553,14 +553,10 @@ function updateColumnHeaders() {
 
     headers.forEach((header, index) => {
         if (index > 0) { // Skip first header (#)
-            header.textContent = `Column ${index}`;
-
-            // Update tableData column headers
-            tableData.forEach(rowData => {
-                if (rowData.cells[index - 1]) {
-                    rowData.cells[index - 1].columnHeader = `Column ${index}`;
-                }
-            });
+            // Get the column header from tableData if available, otherwise use generic name
+            const columnHeader = tableData.length > 0 && tableData[0].cells[index - 1] ?
+                tableData[0].cells[index - 1].columnHeader : `Column ${index}`;
+            header.textContent = columnHeader;
         }
     });
 }

@@ -170,11 +170,17 @@ app.post('/api/save-to-github', async (req, res) => {
       );
 
       if (getFileResponse.ok) {
-        const fileData = await getFileResponse.json();
-        fileSha = fileData.sha;
+        try {
+          const fileData = await getFileResponse.json();
+          fileSha = fileData.sha;
+        } catch (parseError) {
+          console.log('Could not parse file data response:', parseError);
+        }
+      } else if (getFileResponse.status !== 404) {
+        console.log(`File check returned status ${getFileResponse.status}, will attempt to create new file`);
       }
     } catch (err) {
-      console.log('File does not exist yet, will create new file');
+      console.log('Could not check if file exists:', err.message);
     }
 
     // Commit/Update the file to GitHub
@@ -196,8 +202,21 @@ app.post('/api/save-to-github', async (req, res) => {
     );
 
     if (!commitResponse.ok) {
-      const errorData = await commitResponse.json();
-      throw new Error(errorData.message || 'Failed to save to GitHub');
+      let errorMessage = 'Failed to save to GitHub';
+      try {
+        const contentType = commitResponse.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+          const errorData = await commitResponse.json();
+          errorMessage = errorData.message || errorMessage;
+        } else {
+          const errorText = await commitResponse.text();
+          errorMessage = `GitHub API Error (${commitResponse.status}): ${errorText.substring(0, 200)}`;
+        }
+      } catch (parseError) {
+        console.error('Error parsing response:', parseError);
+        errorMessage = `GitHub API Error (${commitResponse.status}): Unable to parse response`;
+      }
+      throw new Error(errorMessage);
     }
 
     res.json({

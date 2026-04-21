@@ -627,6 +627,16 @@ async function loadSavedData() {
 
         // Load from server
         const response = await fetch('/api/table-data');
+        
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        
+        const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+            throw new Error('Invalid response format from server');
+        }
+        
         const result = await response.json();
         if (result.success && result.data) {
             tableData = result.data;
@@ -636,7 +646,12 @@ async function loadSavedData() {
         // Fallback to localStorage
         const savedData = localStorage.getItem('tableEditorData');
         if (savedData) {
-            tableData = JSON.parse(savedData);
+            try {
+                tableData = JSON.parse(savedData);
+            } catch (parseError) {
+                console.error('Error parsing localStorage data:', parseError);
+                tableData = [];
+            }
         }
     } finally {
         // Hide loading overlay
@@ -659,6 +674,16 @@ async function refreshTableData() {
 
         // Load latest data from server
         const response = await fetch('/api/table-data');
+        
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        
+        const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+            throw new Error('Invalid response format from server');
+        }
+        
         const result = await response.json();
         if (result.success && result.data) {
             tableData = result.data;
@@ -837,6 +862,16 @@ async function initCalculatorPage() {
     // Load price mapping from server
     try {
         const response = await fetch('/api/price-mapping');
+        
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        
+        const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+            throw new Error('Invalid response format from server');
+        }
+        
         const result = await response.json();
         if (result.success && result.data) {
             priceMapping = result.data;
@@ -846,7 +881,12 @@ async function initCalculatorPage() {
         // Fallback to localStorage
         const savedPriceMapping = localStorage.getItem('priceMapping');
         if (savedPriceMapping) {
-            priceMapping = JSON.parse(savedPriceMapping);
+            try {
+                priceMapping = JSON.parse(savedPriceMapping);
+            } catch (parseError) {
+                console.error('Error parsing localStorage price mapping:', parseError);
+                priceMapping = {};
+            }
         }
     }
 
@@ -1066,6 +1106,16 @@ async function refreshData() {
     // Update price mapping from server
     try {
         const response = await fetch('/api/price-mapping');
+        
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        
+        const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+            throw new Error('Invalid response format from server');
+        }
+        
         const result = await response.json();
         if (result.success && result.data) {
             priceMapping = result.data;
@@ -1132,7 +1182,21 @@ async function saveToGitHub() {
             })
         });
 
-        const result = await response.json();
+        // Check if response has content-type application/json
+        const contentType = response.headers.get('content-type');
+        const isJson = contentType && contentType.includes('application/json');
+        
+        let result;
+        if (isJson) {
+            result = await response.json();
+        } else {
+            // If not JSON, try to get text response
+            const text = await response.text();
+            result = {
+                success: response.ok,
+                error: text || 'No response content'
+            };
+        }
 
         if (result.success) {
             alert('✓ Table data successfully saved to GitHub!');

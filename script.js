@@ -1182,25 +1182,33 @@ async function saveToGitHub() {
             })
         });
 
-        // Check if response has content-type application/json
-        const contentType = response.headers.get('content-type');
-        const isJson = contentType && contentType.includes('application/json');
-        
         let result;
-        if (isJson) {
-            result = await response.json();
-        } else {
-            // If not JSON, try to get text response
-            const text = await response.text();
+        
+        try {
+            // Always try to parse JSON first
+            const contentType = response.headers.get('content-type');
+            if (contentType && contentType.includes('application/json')) {
+                result = await response.json();
+            } else {
+                // If not JSON, read as text and create error result
+                const text = await response.text();
+                result = {
+                    success: false,
+                    error: text && text.trim() ? text : `HTTP ${response.status}: ${response.statusText}`
+                };
+            }
+        } catch (parseError) {
+            console.error('Error parsing response:', parseError);
             result = {
-                success: response.ok,
-                error: text || 'No response content'
+                success: false,
+                error: `Failed to parse server response: ${parseError.message}`
             };
         }
 
         if (result.success) {
             alert('✓ Table data successfully saved to GitHub!');
         } else {
+            console.error('Server returned error:', result);
             alert(`Error saving to GitHub: ${result.error || 'Unknown error'}`);
         }
     } catch (error) {

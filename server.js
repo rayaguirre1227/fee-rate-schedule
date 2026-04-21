@@ -143,8 +143,7 @@ app.post('/api/save-to-github', async (req, res) => {
       });
     }
 
-    const [owner, repo] = githubRepo.split('/');    GITHUB_TOKEN
-    GITHUB_REPO
+    const [owner, repo] = githubRepo.split('/');
     if (!owner || !repo) {
       return res.status(400).json({
         success: false,

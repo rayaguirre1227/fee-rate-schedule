@@ -1114,7 +1114,7 @@ async function saveToGitHub() {
     try {
         // Show loading state
         if (saveToGithubBtn) {
-            saveToGithubBtn.textContent = 'Saving to GitHub...';
+            saveToGithubBtn.textContent = 'Saving Changes...';
             saveToGithubBtn.disabled = true;
         }
 
@@ -1145,7 +1145,7 @@ async function saveToGitHub() {
     } finally {
         // Reset button state
         if (saveToGithubBtn) {
-            saveToGithubBtn.textContent = 'Save to GitHub';
+            saveToGithubBtn.textContent = 'Save Changes';
             saveToGithubBtn.disabled = false;
         }
     }

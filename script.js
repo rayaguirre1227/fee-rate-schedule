@@ -9,7 +9,7 @@ let lastSelectedRow = null;
 let lastSelectedColumn = null;
 
 // Cached DOM elements for performance
-let mainTable, tableTbody, tableThead, addRowBtn, addColBtn, deleteRowBtn, deleteColBtn, refreshBtn, loadingOverlay;
+let mainTable, tableTbody, tableThead, addRowBtn, addColBtn, deleteRowBtn, deleteColBtn, refreshBtn, saveToGithubBtn, loadingOverlay;
 
 // Debounce utility
 function debounce(func, wait) {
@@ -53,6 +53,7 @@ function cacheDOMElements() {
     deleteRowBtn = document.getElementById('delete-row');
     deleteColBtn = document.getElementById('delete-col');
     refreshBtn = document.getElementById('refresh-data');
+    saveToGithubBtn = document.getElementById('save-to-github');
     loadingOverlay = document.getElementById('loading-overlay');
 }
 
@@ -210,6 +211,7 @@ function initTablePage() {
         if (addColBtn) addColBtn.style.display = 'none';
         if (deleteRowBtn) deleteRowBtn.style.display = 'none';
         if (deleteColBtn) deleteColBtn.style.display = 'none';
+        if (saveToGithubBtn) saveToGithubBtn.style.display = 'none';
     }
 
     // Initialize table with saved data or default
@@ -222,6 +224,7 @@ function initTablePage() {
     if (deleteRowBtn) deleteRowBtn.addEventListener('click', deleteSelectedRow);
     if (deleteColBtn) deleteColBtn.addEventListener('click', deleteSelectedColumn);
     if (refreshBtn) refreshBtn.addEventListener('click', refreshTableData);
+    if (saveToGithubBtn) saveToGithubBtn.addEventListener('click', saveToGitHub);
 
     // Save table data when cells are edited (debounced to avoid excessive calls)
     if (mainTable) {
@@ -1098,4 +1101,52 @@ function updateHeadersEditable() {
             header.contentEditable = editingEnabled;
         }
     });
+}
+
+// ========== GITHUB SAVE FUNCTIONALITY ==========
+
+async function saveToGitHub() {
+    if (!isAuthenticated) {
+        alert('You must be logged in to save to GitHub.');
+        return;
+    }
+
+    try {
+        // Show loading state
+        if (saveToGithubBtn) {
+            saveToGithubBtn.textContent = 'Saving to GitHub...';
+            saveToGithubBtn.disabled = true;
+        }
+
+        // Extract current table data
+        extractTableData();
+
+        // Call the backend API to save to GitHub
+        const response = await fetch('/api/save-to-github', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                data: tableData,
+                timestamp: new Date().toISOString(),
+                username: localStorage.getItem('username') || 'unknown'
+            })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            alert('✓ Table data successfully saved to GitHub!');
+        } else {
+            alert(`Error saving to GitHub: ${result.error || 'Unknown error'}`);
+        }
+    } catch (error) {
+        console.error('Error saving to GitHub:', error);
+        alert(`Error saving to GitHub: ${error.message}`);
+    } finally {
+        // Reset button state
+        if (saveToGithubBtn) {
+            saveToGithubBtn.textContent = 'Save to GitHub';
+            saveToGithubBtn.disabled = false;
+        }
+    }
 }

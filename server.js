@@ -3,6 +3,14 @@ const Database = require('better-sqlite3');
 const cors = require('cors');
 const path = require('path');
 
+// Load environment variables from .env file (optional)
+try {
+  require('dotenv').config();
+} catch (err) {
+  console.log('dotenv not installed. Environment variables must be set manually.');
+  console.log('To enable .env file support, run: npm install dotenv');
+}
+
 const app = express();
 const PORT = 3000;
 
@@ -116,6 +124,97 @@ app.post('/api/price-mapping', (req, res) => {
     res.status(500).json({ success: false, error: error.message });
   }
 });
+
+// Save to GitHub
+app.post('/api/save-to-github', async (req, res) => {
+  try {
+    const { data, timestamp, username } = req.body;
+
+    // Get GitHub configuration from environment variables
+    const githubToken = process.env.GITHUB_TOKEN;
+    const githubRepo = process.env.GITHUB_REPO; // format: "owner/repo"
+    const githubFilePath = process.env.GITHUB_FILE_PATH || 'fee-schedule-data.json';
+
+    // Validate GitHub configuration
+    if (!githubToken || !githubRepo) {
+      return res.status(400).json({
+        success: false,
+        error: 'GitHub configuration not set. Please set GITHUB_TOKEN and GITHUB_REPO environment variables.'
+      });
+    }
+
+    const [owner, repo] = githubRepo.split('/');    GITHUB_TOKEN=ghp_zFTSw3kk2GCyUUsGnvR2ZHSNoEaWkhfkGE1J
+    GITHUB_REPO=rayaguirre1227/fee-rate-schedule
+    if (!owner || !repo) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid GITHUB_REPO format. Use "owner/repo"'
+      });
+    }
+
+    // Prepare the file content
+    const fileContent = JSON.stringify(data, null, 2);
+    const encodedContent = Buffer.from(fileContent).toString('base64');
+
+    // Try to get the current file SHA (for update)
+    let fileSha = null;
+    try {
+      const getFileResponse = await fetch(
+        `https://api.github.com/repos/${owner}/${repo}/contents/${githubFilePath}`,
+        {
+          method: 'GET',
+          headers: {
+            'Authorization': `token ${githubToken}`,
+            'Accept': 'application/vnd.github.v3+json'
+          }
+        }
+      );
+
+      if (getFileResponse.ok) {
+        const fileData = await getFileResponse.json();
+        fileSha = fileData.sha;
+      }
+    } catch (err) {
+      console.log('File does not exist yet, will create new file');
+    }
+
+    // Commit/Update the file to GitHub
+    const commitResponse = await fetch(
+      `https://api.github.com/repos/${owner}/${repo}/contents/${githubFilePath}`,
+      {
+        method: 'PUT',
+        headers: {
+          'Authorization': `token ${githubToken}`,
+          'Accept': 'application/vnd.github.v3+json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          message: `Update fee schedule data - ${timestamp} (by ${username})`,
+          content: encodedContent,
+          ...(fileSha && { sha: fileSha }) // Include SHA if file exists
+        })
+      }
+    );
+
+    if (!commitResponse.ok) {
+      const errorData = await commitResponse.json();
+      throw new Error(errorData.message || 'Failed to save to GitHub');
+    }
+
+    res.json({
+      success: true,
+      message: 'Table data successfully saved to GitHub'
+    });
+
+  } catch (error) {
+    console.error('Error saving to GitHub:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  }
+});
+
 
 // Serve HTML files
 app.get('/', (req, res) => {

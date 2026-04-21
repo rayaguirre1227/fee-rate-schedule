@@ -164,7 +164,7 @@ app.post('/api/save-to-github', async (req, res) => {
         {
           method: 'GET',
           headers: {
-            'Authorization': `token ${githubToken}`, ghp_zFTSwZWXt9LGNzapE7aGZfNBq8da3QgxfE1J ,
+            'Authorization': `token ${githubToken}`,
             'Accept': 'application/vnd.github.v3+json'
           }
         }

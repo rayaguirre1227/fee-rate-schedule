@@ -17,7 +17,17 @@ const PORT = 3000;
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use(express.text());
 app.use(express.static(__dirname));
+
+// Debug middleware - log all requests
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.path}`);
+  next();
+});
+
+// Explicit CORS preflight handler
+app.options('/api/*', cors());
 
 // Initialize SQLite database
 const db = new Database('table-data.db');
@@ -127,6 +137,9 @@ app.post('/api/price-mapping', (req, res) => {
 
 // Save to GitHub
 app.post('/api/save-to-github', async (req, res) => {
+  // Set response headers
+  res.setHeader('Content-Type', 'application/json');
+  
   try {
     const { data, timestamp, username } = req.body;
 

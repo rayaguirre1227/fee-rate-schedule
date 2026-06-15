@@ -1,14 +1,33 @@
 const express = require('express');
 const Database = require('better-sqlite3');
 const cors = require('cors');
+const fs = require('fs');
 const path = require('path');
 
 // Load environment variables from .env file (optional)
 try {
   require('dotenv').config();
 } catch (err) {
-  console.log('dotenv not installed. Environment variables must be set manually.');
-  console.log('To enable .env file support, run: npm install dotenv');
+  console.log('dotenv not installed. Attempting manual .env parsing.');
+  const envPath = path.join(__dirname, '.env');
+  if (fs.existsSync(envPath)) {
+    const envContent = fs.readFileSync(envPath, 'utf8');
+    envContent.split(/\r?\n/).forEach(line => {
+      const trimmed = line.trim();
+      if (!trimmed || trimmed.startsWith('#')) return;
+      const index = trimmed.indexOf('=');
+      if (index === -1) return;
+      const key = trimmed.slice(0, index).trim();
+      let value = trimmed.slice(index + 1).trim();
+      value = value.replace(/^"(.*)"$/, '$1').replace(/^\'(.*)\'$/, '$1');
+      if (key && !(key in process.env)) {
+        process.env[key] = value;
+      }
+    });
+    console.log('.env file loaded manually.');
+  } else {
+    console.log('No .env file found. Environment variables must be set manually.');
+  }
 }
 
 const app = express();
